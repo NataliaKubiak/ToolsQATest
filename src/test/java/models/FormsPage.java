@@ -1,5 +1,6 @@
 package models;
 
+import io.qameta.allure.Step;
 import models.base.BasePage;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -46,6 +47,7 @@ public class FormsPage extends BasePage {
         super(driver);
     }
 
+    @Step("Click Practice Form button")
     public FormsPage clickPracticeForm() {
         practiceFormButton.click();
         return this;
@@ -111,6 +113,7 @@ public class FormsPage extends BasePage {
     }
 
     //date picker - variant 2
+    @Step("Choose Date Of Birth")
     public FormsPage chooseDateOfBirth(String day, String month, int year) {
         dateOfBirthInput.click();
 
@@ -131,6 +134,7 @@ public class FormsPage extends BasePage {
         return this;
     }
 
+    @Step("Retrieve chosen date of birth from the field")
     public String getChosenDate() {
         return dateOfBirthInput.getAttribute("value");
     }

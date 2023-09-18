@@ -7,12 +7,6 @@ import java.util.Random;
 
 public class TestDataGenerator {
 
-//    public static int getRandomMonth() {
-//        Random randomNumber = new Random();
-//        int month = randomNumber.nextInt(13);
-//        return month;
-//    }
-
     public static String getRandomMonth() {
         String[] monthName = {"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"};
 

@@ -1,0 +1,9 @@
+
+<suite name="Forms Positive Tests">
+    <test name="No Test Name">
+        <classes>
+            <class name="tests.FormsTest">
+            </class>
+        </classes>
+    </test>
+</suite>

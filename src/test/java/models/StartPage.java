@@ -1,5 +1,6 @@
 package models;
 
+import io.qameta.allure.Step;
 import models.base.BasePage;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -14,6 +15,7 @@ public class StartPage extends BasePage {
         super(driver);
     }
 
+    @Step("Click Forms page link")
     public FormsPage clickFormsPageLink() {
         formsButton.click();
         return new FormsPage(getDriver());
