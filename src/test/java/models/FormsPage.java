@@ -5,10 +5,11 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import tests.testData.Gender;
 
-import java.util.Calendar;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -110,38 +111,27 @@ public class FormsPage extends BasePage {
     }
 
     //date picker - variant 2
-    public FormsPage chooseDateOfBirthRandomInChosenMonth() {
+    public FormsPage chooseDateOfBirth(String day, String month, int year) {
         dateOfBirthInput.click();
 
-        Random randomNumber = new Random();
-        int month = randomNumber.nextInt(13);
-        int year = randomNumber.nextInt(1900, 2024);
+        List<String> mounthList = new ArrayList<>(List.of("Jan", "Feb", "Mar", "Apr",
+                "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"));
+        int monthIndex = mounthList.indexOf(month);
 
         Select selectMonthMenu = new Select(monthMenu);
-        selectMonthMenu.selectByValue(month+ "");
+        selectMonthMenu.selectByValue(monthIndex + "");
 
         Select selectYearMenu = new Select(yearMenu);
         selectYearMenu.selectByValue(year + "");
 
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(Calendar.YEAR, year);
-        calendar.set(Calendar.MONTH, month);
-
-        int daysInMonth = calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
-
-        int randomPickedDay = randomNumber.nextInt(1, daysInMonth + 1);
-        String daysInMontIndex;
-
-        if (randomPickedDay < 10) {
-            daysInMontIndex = "00" + randomPickedDay;
-        } else {
-            daysInMontIndex = "0" + randomPickedDay;
-        }
-
-        getDriver().findElement(By
-                .xpath("//div[@class='react-datepicker__day react-datepicker__day--" +
-                        daysInMontIndex + "']")).click();
-
+        getWait5().until(ExpectedConditions
+                .elementToBeClickable(By.xpath("//div[@class='react-datepicker__day react-datepicker__day--0" +
+                        day + "' or @class='react-datepicker__day react-datepicker__day--0" +
+                        day + " react-datepicker__day--weekend']" ))).click();
         return this;
+    }
+
+    public String getChosenDate() {
+        return dateOfBirthInput.getAttribute("value");
     }
 }
