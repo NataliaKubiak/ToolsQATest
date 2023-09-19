@@ -15,7 +15,7 @@ public class StartPage extends BasePage {
         super(driver);
     }
 
-    @Step("Click Forms page link")
+    @Step("Clicking Forms page link")
     public FormsPage clickFormsPageLink() {
         formsButton.click();
         return new FormsPage(getDriver());

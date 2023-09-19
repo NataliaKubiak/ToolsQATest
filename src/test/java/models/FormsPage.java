@@ -38,20 +38,45 @@ public class FormsPage extends BasePage {
     private WebElement monthMenu;
     @FindBy(className = "react-datepicker__year-select")
     private WebElement yearMenu;
+    @FindBy(id = "hobbies-checkbox-1")
+    private WebElement sportCheckbox;
+    @FindBy(id = "hobbies-checkbox-2")
+    private WebElement readingCheckbox;
+    @FindBy(id = "hobbies-checkbox-3")
+    private WebElement musicCheckbox;
     @FindBy(id = "currentAddress")
-    private WebElement currentAddressInput;
+    private WebElement addressInput;
+    @FindBy(id = "state")
+    private WebElement selectStateDropdownMenu;
+    @FindBy(id = "city")
+    private WebElement selectCityDropdownMenu;
     @FindBy(id = "submit")
     private WebElement submitButton;
+    @FindBy(className = "modal-content")
+    private WebElement confirmationPopup;
 
     public FormsPage(WebDriver driver) {
         super(driver);
     }
 
-    @Step("Click Practice Form button")
+    @Step("Clicking Practice Form button")
     public FormsPage clickPracticeForm() {
         practiceFormButton.click();
         return this;
     }
+
+    @Step("Clicking Submit button")
+    public FormsPage clickSubmitButton() {
+        submitButton.click();
+        return this;
+    }
+
+    @Step("Checking if Pop-up appeared")
+    public boolean isConfirmationPopupAppear() {
+        return getWait5().until(ExpectedConditions.visibilityOf(confirmationPopup)).isDisplayed();
+    }
+
+    @Step("Filling in First Name field and Last Name field")
     public FormsPage fillInFirstAndLastName(String firstName, String lastName) {
         firstNameInput.sendKeys(firstName);
         lastNameInput.sendKeys(lastName);
@@ -59,11 +84,13 @@ public class FormsPage extends BasePage {
         return this;
     }
 
+    @Step("Filling in Email field")
     public FormsPage fillInEmail(String email) {
         emailInput.sendKeys(email);
         return this;
     }
 
+    @Step("Choosing Gender")
     public FormsPage chooseGender(Gender gender) {
         int number;
 
@@ -78,6 +105,7 @@ public class FormsPage extends BasePage {
         return this;
     }
 
+    @Step("Choosing Gender")
     public FormsPage chooseGenderRandom() {
         Random randomNumber = new Random();
         int genderNumber = randomNumber.nextInt(1, 4);
@@ -86,12 +114,19 @@ public class FormsPage extends BasePage {
         return this;
     }
 
+    @Step("Filling in Mobile number")
+    public FormsPage fillInMobile(String mobile) {
+        phoneNumberInput.sendKeys(mobile);
+        return this;
+    }
+
     //date picker - variant 1
+    @Step("Choosing Date Of Birth")
     public FormsPage chooseDateOfBirthRandomClickOnPicker() {
         dateOfBirthInput.click();
 
         Random randomNumber = new Random();
-        String month = randomNumber.nextInt(13) + "";
+        String month = randomNumber.nextInt(12) + "";
         String year = randomNumber.nextInt(1900, 2023) + "";
 
         Select selectMonthMenu = new Select(monthMenu);
@@ -113,7 +148,7 @@ public class FormsPage extends BasePage {
     }
 
     //date picker - variant 2
-    @Step("Choose Date Of Birth")
+    @Step("Choosing Date Of Birth")
     public FormsPage chooseDateOfBirth(String day, String month, int year) {
         dateOfBirthInput.click();
 
@@ -138,4 +173,51 @@ public class FormsPage extends BasePage {
     public String getChosenDate() {
         return dateOfBirthInput.getAttribute("value");
     }
+
+    @Step("Checking Hobby checkbox")
+    public FormsPage chooseHobbiesRandomly() {
+        Random randomNumber = new Random();
+        int checkboxNumber = randomNumber.nextInt(1, 4);
+
+        getDriver().findElement(By.xpath("//label[@for='hobbies-checkbox-" +
+                checkboxNumber + "']")).click();
+
+        return this;
+    }
+
+    @Step("Filling in Address")
+    public FormsPage fillInAddress(String address) {
+        addressInput.sendKeys(address);
+        return this;
+    }
+
+    //TODO rewrite or delete
+//    @Step("Choosing State and City from dropdown menu")
+//    public FormsPage chooseStateAndCity() {
+//        List<String> statesList = new ArrayList<>(List.of("NCR", "Uttar Pradesh", "Haryana", "Rajasthan"));
+//        List<String> ncrCitiesList = new ArrayList<>(List.of("Delhi", "Gurgaon", "Noida"));
+//        List<String> uttarPradeshCitiesList = new ArrayList<>(List.of("Agra", "Lucknow"));
+//        List<String> haryanaCitiesList = new ArrayList<>(List.of("Karnal", "Panipat"));
+//        List<String> rajasthanCitiesList = new ArrayList<>(List.of("Jaipur", "Jaiselmer"));
+//
+//        Random randomNumber = new Random();
+//        String state = statesList.get(randomNumber.nextInt(4));
+//        String city = "";
+//
+//        switch (state) {
+//            case "NCR" -> city = ncrCitiesList.get(randomNumber.nextInt(3));
+//            case "Uttar Pradesh" -> city = uttarPradeshCitiesList.get(randomNumber.nextInt(2));
+//            case "Haryana" -> city = haryanaCitiesList.get(randomNumber.nextInt(2));
+//            case "Rajasthan" -> city = rajasthanCitiesList.get(randomNumber.nextInt(2));
+//        }
+//
+////        clickByJSExecutor(this, selectStateDropdownMenu);
+//
+//        JavascriptExecutor executor = (JavascriptExecutor) getDriver();
+//        executor.executeScript("arguments[0].value = '" + state + "'", selectStateDropdownMenu);
+////        getWait5().until(ExpectedConditions.elementToBeClickable(selectStateDropdownMenu)).sendKeys(state, Keys.ENTER);
+//        getWait5().until(ExpectedConditions.elementToBeClickable(selectCityDropdownMenu)).sendKeys(city, Keys.ENTER);
+//
+//        return this;
+//    }
 }

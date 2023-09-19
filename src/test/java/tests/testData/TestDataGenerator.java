@@ -1,5 +1,7 @@
 package tests.testData;
 
+import com.github.javafaker.Faker;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -23,7 +25,8 @@ public class TestDataGenerator {
     }
 
     public static String getRandomDay(int year, String month) {
-        List<String> mounthList = new ArrayList<>(List.of("Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"));
+        List<String> mounthList = new ArrayList<>(List.of("Jan", "Feb", "Mar",
+                "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"));
         int monthIndex = mounthList.indexOf(month);
 
         Calendar calendar = Calendar.getInstance();
@@ -43,4 +46,28 @@ public class TestDataGenerator {
         return daysInMontIndex;
     }
 
+    public static String generateFirstName() {
+        Faker faker = new Faker();
+        return faker.name().firstName();
+    }
+
+    public static String generateLastName() {
+        Faker faker = new Faker();
+        return faker.name().lastName();
+    }
+
+    public static String generateEmail(String firstName, String lastName) {
+        Faker faker = new Faker();
+        return faker.internet().emailAddress(firstName + lastName);
+    }
+
+    public static String generateMobile() {
+        Faker faker = new Faker();
+        return faker.phoneNumber().subscriberNumber(10);
+    }
+
+    public static String generateAddress() {
+        Faker faker = new Faker();
+        return faker.address().fullAddress();
+    }
 }
